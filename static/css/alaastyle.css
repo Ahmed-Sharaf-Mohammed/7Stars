@@ -47,17 +47,20 @@
 .site-main .site-banner .site-title h3 {
     padding-top: 20%;
     font-weight: 500;
+    color: white;
 }
 
 
 .site-main .site-banner .site-title h1 {
     font-size: 5rem;
     margin-top: -5px;
+    color: white;
 }
 
 .site-main .site-banner .site-title h4 {
     font-size: 1.5rem;
     margin-top: -50px;
+    color: white;
 }
 
 .site-main .site-banner .site-title .banner-image>img {
@@ -83,11 +86,13 @@
     display: block;
     font: normal bold 49px/60px var(--roboto);
     letter-spacing: 21px;
+    color: white;
 }
 
 .site-main .about .about-title .paragraph>p {
     padding: 0.4rem 0;
     font-size: 20px;
+    font-weight: 500;
 }
 
 
