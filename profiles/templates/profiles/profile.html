@@ -1,0 +1,218 @@
+{% load static %}
+{% load i18n %}
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/mayarstyle.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <!--main Templete-3 Css File-->
+    <link rel="stylesheet" href="{% static 'css/morsy.css' %}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/morsy.min.css' %}">
+    <!--Google Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Fraunces:opsz,wght@9..144,700&family=Montserrat:wght@500;700&family=Open+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+        <!--responsive css file-->
+    <link rel="stylesheet" href="{% static 'css/responsive.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+      <!--bootsrap css file-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}" />
+    <title>Profile</title>
+</head>
+
+<body>
+    <Header>
+        <li class="container">
+            <a href="{% url 'pages:index' %}" class="logo">
+                <h2 style="color: #fff;">The Art</h2>
+            </a>
+            <ul class="links">
+                <li><a href="{% url 'pages:index' %}">Home</a></li>
+                <li><a href="">Browse cert</a></li>
+                {% if request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'profiles:profile' %}">Profile</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{% url 'registration:signin' %}">Profile</a>
+                    </li>
+                    {% endif %}
+            </ul>
+            <div class="col-xl-3 col-lg-3 d-none d-lg-block">
+                <div class="Appointment">
+
+                    {% if request.user.is_authenticated %}
+                    <div class="d-none d-lg-block">
+                        <a href="{% url 'registration:logout' %}" class="boxed-btn3">Logout</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+
+    </Header>
+    
+    <section>
+        <center>
+            <div class="profile">
+
+                <div class="card">
+
+                    <div class="image">
+                        <img src="{{ user.profile.image.url }}" alt="face">
+                    </div>
+                    <div class="content">
+                        <h2>{{profile.user}}</h2>
+                    </div>
+
+                    <div class="main">
+                        <p style="color:black"><i class="fa fa-envelope ">
+                            </i> {{profile.user.email}}</p>
+                        <p style="color:black"><i class="fa fa-phone">
+                            </i> {{profile.phone_number}}</p>
+                        <p style="color:black"><i class="fas fa-map-marker-alt fa-fw" aria-hidden="true">
+                            </i> {{profile.city}}</p>
+                        <p style="color:black"><i class="fa fa-calendar-o">
+                            </i> {{profile.dob}}</p>
+                        <p style="color:black"><i class="fa fa-user ">
+                            </i> {{profile.gender}}</p>
+                    </div>
+                    <br />
+                    <div class="us" style="margin-top: 0px;
+           padding-top: 0px;
+           padding :10px;
+           color: black;
+           font-size: 1rem;
+           border-radius: 5px;
+           border: 1px solid black;
+           height: 200px;
+           text-align: left;
+           display: block">
+                        <h3>Certification</h3>
+                        {% if profile.file.name == "none" %}
+                        <i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size: 30px;"></i> <strong
+                            style="padding-left: 10px;"><a href="{% url 'profiles:fallback_file' %}" style="color: black;
+           text-decoration:none;">{{profile.file}}</a></strong>
+                        {% else %}
+                             <i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size: 30px;"></i> <strong
+                            style="padding-left: 10px;"><a href="{{ profile.file.url }}" style="color: black;
+           text-decoration:none;">{{profile.file}}</a></strong>
+                        {% endif %}
+
+                    </div>
+
+                    <br>
+
+                    <!--<a href="">
+                        <button class="edite">My Joblist</button>
+                    </a>-->
+
+                    <a href="{% url 'profiles:edite' %}">
+                        <button class="edite">Edit Profile</button>
+                    </a>
+                    <br />
+                    <a href="{% url 'profiles:password_change' %}">
+                        <button class="pass">Change Password</button>
+                    </a>
+
+
+                </div>
+            </div>
+
+        </center>
+    </section>
+    <br>
+    <br>
+    <br>
+    <section style="margin-top: 330px;">
+
+        <div class="spikes"></div>
+
+   <!--Start Footer-->
+    <footer>
+        <div class="container">
+
+
+            <div class="box">
+                <h3 style="color: #fff;">The Aart</h3>
+                <br>
+                <ul class="social">
+                    <li>
+                        <a href="#" class="facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="youtube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </li>
+                </ul>
+                <br>
+                <p class="text">
+                    A vast collection of knowledge in one place.
+                </p>
+            </div>
+
+
+            <div class="box">
+                <ul class="links">
+                    <li>
+                        <a href="">Members</a>
+                    </li>
+                    <li>
+                        <a href="">Apply for a Certificate</a>
+                    </li>
+                    <li>
+                        <a href=""><i></i>Feedback</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box">
+                <div class="line">
+                    <i class="fas fa-map-marker-alt fa-fw"></i>
+                    <div class="info">
+                        Nasr-City, Cairo, Egypt
+                    </div>
+                </div>
+                <div class="line">
+                    <i class="far fa-clock fa-fw"></i>
+                    <div class="info">
+                        The Art Team Working Hours: 7/24
+                    </div>
+
+                </div>
+                <div class="line">
+                    <i class="fas fa-phone-volume fa-fw"></i>
+                    <div class="info">
+                        +201096872921
+                    </div>
+                </div>
+            </div>
+
+        </div>
+       <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made<i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">The Art Team</a> </p>
+    </footer>
+    <!--End Footer-->
+    </section>
+</body>
+
+</html>

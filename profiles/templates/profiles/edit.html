@@ -1,0 +1,55 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/sty.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Edit Profile</title>
+</head>
+
+<body>
+    <center>
+        <div style="margin-bottom: 50px;" class="box">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="upload">
+                    <img id="imageblock" src="{{request.user.profile.image.url}}">
+                    <div class="round">
+
+                        <i class="fa fa-camera" style="color:black"></i>
+
+                    </div>
+                    {{ profileform.image }}
+                </div>
+                <br />
+                <br />
+
+                <label class="small">UserName</label>
+                {{ userform.username }}
+                <label class="small">Email</label>
+                {{ userform.email }}
+                <label class="small">Date of birth</label><br />
+                {{ profileform.dob }}
+                <label class="small">PhoneNumber</label>
+                {{ profileform.phone_number }}
+                <label class="small">City</label>
+                {{ profileform.city }}
+                <label class="small">Gender</label>
+                {{ profileform.gender }}
+                <label class="small">Your Course</label>
+                {{ profileform.course }}
+                <br>
+                <br>
+                <br>
+                <br>
+                <button type="submit">UP DATE</button>
+            </form>
+        </div>
+    </center>
+</body>
+
+</html>
