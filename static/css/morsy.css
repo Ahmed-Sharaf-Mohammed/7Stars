@@ -2030,6 +2030,46 @@ footer .copyright {
 /* End footer */
 
 
+/* Responsive Typography */
+body {
+    font-size: 2vw; /* Scales based on viewport width */
+}
+
+h1, h2, h3, .title {
+    font-size: calc(1rem + 2vw);
+}
+
+/* Refine Container Widths */
+.container {
+    padding-left: 2vw;
+    padding-right: 2vw;
+    max-width: 95vw;
+}
+
+/* Flexible Image Handling */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Specific Component Adjustments */
+@media (max-width: 600px) {
+    .title {
+        font-size: 24px;
+        margin: 10px auto;
+        padding: 5px 15px;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1200px) {
+    .container {
+        width: 80vw;
+    }
+
+    .title {
+        font-size: 30px;
+    }
+}
 
 
 
