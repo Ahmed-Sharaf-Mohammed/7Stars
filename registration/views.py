@@ -1,3 +1,4 @@
+import random
 from django.contrib import messages
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Login
@@ -11,38 +12,64 @@ from django.contrib.auth.models import User
 def SignupPage(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
-        uname = request.POST.get('username')
+        fname = request.POST.get('first_name')
+        lname = request.POST.get('last_name')
         email = request.POST.get('email')
         pass1 = request.POST.get('password1')
-        # pass2=request.POST.get('password2')
-        if uname == "":
-            messages.error(request, "Username is required.")
-        elif pass1 == "":
+
+        # Generate a unique username by checking the database
+        while True:
+            random_number = random.randint(0, 1000)
+            uname = f"{fname}-{lname}".lower() + f"-{random_number}"
+            if not User.objects.filter(username=uname).exists():
+                break  # Exit the loop if the username is unique
+
+        # Validation checks
+        if not fname:
+            messages.error(request, "First Name is required.")
+            return render(request, 'registration/signup.html', {'form': form})
+
+        if not lname:
+            messages.error(request, "Last Name is required.")
+            return render(request, 'registration/signup.html', {'form': form})
+
+        if not pass1:
             messages.error(request, "Password is required.")
-        elif email == "":
-            messages.error(request, "email is required.")
-        elif User.objects.filter(username=uname).exists() == True or User.objects.filter(email=email).exists() == True:
-            messages.info(
-                request, f"We regret to inform you that the selected username {uname} or email {email} is already registered in our system. We kindly request that you choose a different username and email address.")
-        elif form.is_valid():
-            form.save()
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password1']
-            user = authenticate(username=username, email=email, password=password)
+            return render(request, 'registration/signup.html', {'form': form})
+
+        if not email:
+            messages.error(request, "Email is required.")
+            return render(request, 'registration/signup.html', {'form': form})
+
+        if User.objects.filter(email=email).exists():
+            messages.info(request, f"The email {email} is already registered in our system.")
+            return render(request, 'registration/signup.html', {'form': form})
+
+        # If form is valid, create and save user
+        if form.is_valid():
+            user = form.save(commit=False)  # Create user instance without saving yet
+            user.username = uname
+            user.first_name = fname
+            user.last_name = lname
+            user.email = email
+            user.set_password(pass1)  # Set the password correctly
+            user.save()
+
+            # Log in the new user
             login(request, user)
             messages.success(request, 'Account created successfully!')
             return redirect('profiles:edite')
-        
+
+        # Show form errors if validation fails
         else:
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f'{field}: {error}')
+
     else:
         form = SignupForm()
 
     return render(request, 'registration/signup.html', {'form': form})
-
 
 
 def LoginPage(request):

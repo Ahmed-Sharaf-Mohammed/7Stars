@@ -29,6 +29,11 @@ class Profile(models.Model):
     file = models.FileField(upload_to=user_directory_path, max_length=40, default='none', blank=True, verbose_name=_("File"))
     course = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Certification"))
 
+    # Version 3  users find it difficult to use unique username for sign up
+    first_name = models.CharField(max_length=30, blank=True, verbose_name="First Name")
+    last_name = models.CharField(max_length=30, blank=True, verbose_name="Last Name")
+
+
     def __str__(self):
         return str(self.user)
 
