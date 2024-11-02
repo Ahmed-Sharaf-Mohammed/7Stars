@@ -5,6 +5,7 @@ from .models import Login
 from django.contrib.auth import authenticate, login, logout
 from .forms import SignupForm
 from django.contrib.auth.models import User
+from profiles.models import Profile  # Import the Profile model
 # Create your views here.
 # @login_required(login_url='login')
 
@@ -54,6 +55,12 @@ def SignupPage(request):
             user.email = email
             user.set_password(pass1)  # Set the password correctly
             user.save()
+
+            # Check if Profile already exists for this user
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.first_name = fname
+            profile.last_name = lname
+            profile.save()
 
             # Log in the new user
             login(request, user)
